@@ -1,2 +1,1 @@
-# API_blog
-Para accesibilidad 
+# blog-rest-api

@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuarios{
+  NIP_usuarios Int @id @default(autoincrement())
+  nombre_usuarios String @db.VarChar(30)
+  apellido_usuarios String @db.VarChar(30)
+  email_usuarios String @db.VarChar(64)
+  genero_usuarios String @db.VarChar(20)
+  sede_usuarios String @db.VarChar(64)
+  rol_usuarios Role @default(USER)
+  estado_usuarios Int @db.SmallInt
+  pass_usuarios String @db.VarChar(200)
+  fecha_usuarios DateTime @db.Date
+  imagen_usuarios Bytes @db.Blob
+  publicacion Publicaciones[]
+  comentario Comentarios[]
+}
+model Publicaciones{
+  id_publicaciones Int @id @default(autoincrement()) 
+  titulo_publicaciones String @db.VarChar(64)
+  contenido_publicaciones String @db.Text
+  fecha_publicaciones DateTime @db.Date
+  estado_publicaciones Int @db.SmallInt
+  imagen_publicaciones Bytes @db.Blob
+  comentarios Comentarios[]
+  usuario_publicaciones_fk Int
+  categoria_publicaciones_fk Int
+  autor Usuarios @relation(fields: [usuario_publicaciones_fk], references: [NIP_usuarios])
+  categoria Categorias @relation(fields: [categoria_publicaciones_fk], references: [id_categorias])
+}
+model Categorias{
+  id_categorias Int @id @default(autoincrement())
+  nombre_categorias String @db.VarChar(64)
+  publicacion Publicaciones[]
+}
+model Comentarios{
+  id_comentarios Int @id @default(autoincrement())
+  contenido_comentarios String @db.Text
+  fecha_comentarios DateTime @default(now())
+  estado_comentarios Int @db.SmallInt
+  imagen_comentarios Bytes @db.Blob
+  usuario_comentarios_fk Int
+  publicacion_comentarios_fk Int
+  autor Usuarios @relation(fields: [usuario_comentarios_fk], references: [NIP_usuarios])
+  publicacion Publicaciones @relation(fields: [publicacion_comentarios_fk], references: [id_publicaciones])
+}
+enum Role{
+  USER
+  ADMIN
+}
+
+
+
+
+
