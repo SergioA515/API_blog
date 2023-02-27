@@ -1,21 +1,23 @@
+/**
+ * @author Sergio Alejadro Parra
+ */
 import { Comentarios, Publicaciones, Usuarios } from '@prisma/client';
 import { db } from '../config/db.server';
-
-type Usuario = {
-    id:number;
-    nombre: string;
-    apellido: string;
-    genero: string;
-    email: string;
-    password: string;
-    sede: string;
-    fecha: Date;
-    imagen: Buffer;
-    estado: number;
-    comentario: Comentarios[];
-    publicacion: Publicaciones[];
-};
-
+/** Operaciones CRUD/ Listar entidad @Usuarios de la base de datos */
+// type usuarios = {
+//     id:number;
+//     nombre: string;
+//     apellido: string;
+//     genero: string;
+//     email: string;
+//     password: string;
+//     sede: string;
+//     fecha: Date;
+//     imagen: Buffer;
+//     estado: number;
+//     comentario: Comentarios[];
+//     publicacion: Publicaciones[];
+// };
 export const listUsuarios = async (): Promise<Usuarios[]> => {
     return db.usuarios.findMany({
         select:{
@@ -41,7 +43,7 @@ export const getUsuario = async (NIP_usuarios:number): Promise<Usuarios | null> 
         }
     });
 }
-// Crear las usuarios
+// Crear un usuario
 export const createUsuario = async (
     Usuario: Omit<Usuarios, "NIP_usuarios"> 
 ): Promise<Usuarios> => {
@@ -85,6 +87,7 @@ export const createUsuario = async (
         },
     });
 };
+// actualizar un Usuario
 export const updateUsuario = async (
     NIP_usuarios:number,
     Usuario: Omit<Usuarios, "NIP_usuarios"> 

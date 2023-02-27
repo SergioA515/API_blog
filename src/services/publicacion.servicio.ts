@@ -3,7 +3,7 @@
  */
 import { Publicaciones } from '@prisma/client';
 import { db } from '../config/db.server';
-// Operaciones CRUD/ Listar entidad de la base de datos
+/** Operaciones CRUD/ Listar entidad @Publicaciones de la base de datos */
 export const listPublicaciones = async (): Promise<Publicaciones[]> => {
     return db.publicaciones.findMany({
         select:{
@@ -88,7 +88,7 @@ export const updatePublicacion = async (
     });
 };
 // Eliminar una publicacionde la base de datos
-export const deletePubliciones = async(id_publicaciones: number): Promise<void> => {
+export const deletePublicion = async(id_publicaciones: number): Promise<void> => {
     await db.publicaciones.delete({
         where: {
             id_publicaciones,

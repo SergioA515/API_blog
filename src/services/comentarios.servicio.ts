@@ -3,7 +3,7 @@
  */
 import { Comentarios } from "@prisma/client";
 import { db } from "../config/db.server";
-// Operaciones CRUD / Listar entidad de la base de datos 
+/** Operaciones CRUD/ Listar entidad @Comentarios de la base de datos */
 export const listComentarios = async(): Promise<Comentarios[]> => {
     return db.comentarios.findMany({
         select: {
@@ -76,6 +76,14 @@ export const updateComentario = async(
             estado_comentarios,
             imagen_comentarios,
             usuario_comentarios_fk: Comentario.usuario_comentarios_fk,
+        },
+    });
+};
+// Eliminar un comentario
+export const deleteComentario =async(id_comentarios:number): Promise<void> => {
+    await db.comentarios.delete({
+        where: {
+            id_comentarios,
         },
     });
 };
